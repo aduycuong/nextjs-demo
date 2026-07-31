@@ -1,79 +1,99 @@
 import { connection } from "next/server";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
 
 export default async function Home() {
   await connection();
 
-  const envVariables = Object.entries(process.env).sort(([leftKey], [rightKey]) =>
-    leftKey.localeCompare(rightKey),
-  );
-  const renderedAt = new Date().toISOString();
-
   return (
-    <main className="min-h-screen bg-slate-950 px-6 py-10 text-white sm:px-10 lg:px-16">
-      <section className="mx-auto flex w-full max-w-7xl flex-col gap-8">
-        <div className="rounded-[2rem] border border-white/10 bg-white/5 p-6 shadow-2xl shadow-cyan-950/30 sm:p-8">
-          <p className="w-fit rounded-full border border-cyan-300/30 bg-cyan-300/10 px-4 py-2 text-sm font-medium text-cyan-200">
-            Testing homepage
+    <main className="min-h-screen bg-background p-8">
+      <div className="mx-auto max-w-4xl space-y-8">
+        <div className="space-y-2">
+          <h1 className="text-4xl font-bold tracking-tight">
+            Next.js + shadcn/ui
+          </h1>
+          <p className="text-lg text-muted-foreground">
+            A modern Next.js 16 project with shadcn/ui components
           </p>
-          <div className="mt-6 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
-            <div>
-              <h1 className="text-4xl font-semibold tracking-tight text-balance sm:text-5xl">
-                Environment variables
-              </h1>
-              <p className="mt-4 max-w-2xl text-lg leading-8 text-slate-300">
-                All server-side environment variables available to this Next.js
-                process are rendered here for testing.
-              </p>
-            </div>
-            <dl className="grid gap-3 sm:grid-cols-2">
-              <div className="rounded-2xl border border-white/10 bg-slate-900/70 p-4">
-                <dt className="text-sm text-slate-400">Total variables</dt>
-                <dd className="mt-2 text-3xl font-semibold">
-                  {envVariables.length}
-                </dd>
-              </div>
-              <div className="rounded-2xl border border-white/10 bg-slate-900/70 p-4">
-                <dt className="text-sm text-slate-400">Rendered at</dt>
-                <dd className="mt-2 font-mono text-sm text-cyan-200">
-                  {renderedAt}
-                </dd>
-              </div>
-            </dl>
-          </div>
         </div>
 
-        <section className="overflow-hidden rounded-[2rem] border border-white/10 bg-slate-900/80">
-          <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-white/10 text-left">
-              <thead className="bg-white/5 text-xs uppercase tracking-[0.2em] text-slate-400">
-                <tr>
-                  <th className="px-5 py-4 font-semibold" scope="col">
-                    Name
-                  </th>
-                  <th className="px-5 py-4 font-semibold" scope="col">
-                    Value
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-white/10">
-                {envVariables.map(([name, value]) => (
-                  <tr className="align-top" key={name}>
-                    <th
-                      className="w-1/3 px-5 py-4 font-mono text-sm font-semibold text-cyan-200"
-                      scope="row"
-                    >
-                      {name}
-                    </th>
-                    <td className="px-5 py-4 font-mono text-sm leading-6 whitespace-pre-wrap break-all text-slate-200">
-                      {value ?? ""}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </section>
-      </section>
+        <div className="grid gap-6 md:grid-cols-2">
+          <Card>
+            <CardHeader>
+              <CardTitle>Button Components</CardTitle>
+              <CardDescription>
+                Various button styles and variants
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="flex flex-wrap gap-2">
+                <Button variant="default">Default</Button>
+                <Button variant="secondary">Secondary</Button>
+                <Button variant="destructive">Destructive</Button>
+                <Button variant="outline">Outline</Button>
+                <Button variant="ghost">Ghost</Button>
+                <Button variant="link">Link</Button>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                <Button size="sm">Small</Button>
+                <Button size="default">Default</Button>
+                <Button size="lg">Large</Button>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Input Component</CardTitle>
+              <CardDescription>
+                Text input with shadcn styling
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <Input type="text" placeholder="Enter your name" />
+              <Input type="email" placeholder="Email address" />
+              <Input type="password" placeholder="Password" />
+            </CardContent>
+            <CardFooter>
+              <Button className="w-full">Submit</Button>
+            </CardFooter>
+          </Card>
+
+          <Card className="md:col-span-2">
+            <CardHeader>
+              <CardTitle>Card Component</CardTitle>
+              <CardDescription>
+                This entire interface is built with shadcn/ui components
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-muted-foreground">
+                shadcn/ui is now successfully integrated into this Next.js 16 project.
+                The project includes:
+              </p>
+              <ul className="mt-4 space-y-2 text-sm">
+                <li className="flex items-center gap-2">
+                  <span className="text-primary">✓</span>
+                  <span>Tailwind CSS v4 with CSS variables</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="text-primary">✓</span>
+                  <span>shadcn/ui components (Button, Card, Input)</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="text-primary">✓</span>
+                  <span>TypeScript configuration</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="text-primary">✓</span>
+                  <span>Utility functions and proper project structure</span>
+                </li>
+              </ul>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
     </main>
   );
 }
